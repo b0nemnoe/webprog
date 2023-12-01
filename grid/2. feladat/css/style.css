@@ -1,0 +1,15 @@
+.grid-container{
+    display: grid;
+    grid-template: 
+    "a b c d"
+    "e f g h"
+    "i j k l";
+    gap: 10px;
+    width: max-content;
+}
+
+.grid-item{
+    background-color: blueviolet;
+    width: 100px;
+    height: 100px;
+}
