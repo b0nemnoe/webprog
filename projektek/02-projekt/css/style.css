@@ -1,19 +1,19 @@
 body {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items:center;
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
-  }
+}
 
-  #game-board {
+#game-board {
     display: grid;
     grid-template-columns: repeat(4, 200px);
     gap: 20px;
-  }
+}
 
-  .card {
+.card {
     width: 150px;
     height: 225px;
     background-image: url(../img/card_back.png);
@@ -26,13 +26,10 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease;  
+}
 
-    
-    
-  }
-
-  .selected {
+.selected {
     background-image: url(../img/card_front.png);
     background-repeat: no-repeat;
     background-position: center;
@@ -42,9 +39,9 @@ body {
     height: 225px;
     animation: flip 1s ease forwards;
 
-  }
+}
   
-  @keyframes flip {
+@keyframes flip {
     0% {
       transform: rotateY(180deg);
       
@@ -52,4 +49,13 @@ body {
     100% {
       transform: rotateY(360deg);
     }
-  }
+}
+
+@media (max-width: 800px) {
+    .card {
+      width: 80px;
+      height: 120px;
+      font-size: 18px;
+      gap: 5px;
+    }  
+}

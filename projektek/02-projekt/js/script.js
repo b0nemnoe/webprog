@@ -45,10 +45,12 @@ function handleCardClick() {
   }
 }
 
-function checkMatch() {
+function checkMatch() 
+{
   const [card1, card2] = selectedCards;
 
-  if (card1.dataset.id === card2.dataset.id) {
+  if (card1.dataset.id === card2.dataset.id) 
+  {
     // Match
     card1.removeEventListener('click', handleCardClick);
     card2.removeEventListener('click', handleCardClick);
@@ -79,7 +81,7 @@ function startGame() {
     document.querySelectorAll('.card').forEach(card => {
       card.textContent = ''; // kártyák megfordítása 5mp után
     });
-  }, 500);
+  }, 5000);
 }
 
 startGame();
