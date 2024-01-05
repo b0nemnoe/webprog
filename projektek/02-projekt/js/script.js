@@ -84,6 +84,7 @@ function checkMatch()
 function startGame() {
   shuffledCards = shuffle([...cards, ...cards]);
   renderBoard();
+  matchedCards = 0;
 
   setTimeout(() => {
     document.querySelectorAll('.card').forEach(card => {
