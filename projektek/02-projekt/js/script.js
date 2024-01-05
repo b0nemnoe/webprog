@@ -44,20 +44,27 @@ function handleCardClick() {
     }
   }
 }
-
+let matchedCards = 0;
 function checkMatch() 
 {
   const [card1, card2] = selectedCards;
-
+  
   if (card1.dataset.id === card2.dataset.id) 
   {
     // Match
     card1.removeEventListener('click', handleCardClick);
     card2.removeEventListener('click', handleCardClick);
+    card1.classList.remove('.card');
+    card2.classList.remove('.card');
+
+    card1.style.visibility = 'hidden';
+    card2.style.visibility = 'hidden';
+    
 
     selectedCards = [];
-
-    if (document.querySelectorAll('.card').length === 0) {
+    matchedCards++;
+    console.log(matchedCards)
+    if (matchedCards == 8) {
       setTimeout(() => {
         alert('Gratulálok! Minden kártya párt megtaláltál!');
         startGame();
@@ -71,6 +78,7 @@ function checkMatch()
     card2.classList.remove('selected');
     selectedCards = [];
   }
+  
 }
 
 function startGame() {
@@ -81,7 +89,7 @@ function startGame() {
     document.querySelectorAll('.card').forEach(card => {
       card.textContent = ''; // kártyák megfordítása 5mp után
     });
-  }, 5000);
+  }, 500000);
 }
 
 startGame();

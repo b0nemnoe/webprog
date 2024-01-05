@@ -30,7 +30,7 @@ body {
 }
 
 .selected {
-    background-image: url(../img/card_front.png);
+    background-image: url(../img/card_front.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
