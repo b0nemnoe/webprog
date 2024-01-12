@@ -7,20 +7,13 @@
     <title>odd cubed numbers</title>
 </head>
 <script>
-    let cubeOdd = (arr) => {
-        let num = arr.map((x) => x ** 3);
-        let sum = 0;
-        for (var element of num) 
-        {
-            if(element % 2 === 1)
-            {
-                sum += element
-            }
-        };
-        console.log(sum)
-
-
-return 0;
+    function cubeOdd(arr) {
+  eredmeny = 0;
+  for(i=0;i<arr.length;i++){
+    if(isNaN(arr[i])){return undefined;}
+    if(arr[i]%2!==0){eredmeny += Math.pow(arr[i], 3);}
+  }
+  return eredmeny;
 }
 
 </script>
