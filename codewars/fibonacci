@@ -1,0 +1,14 @@
+public class Fibonacci
+{
+    public static int Fib(int n)
+    {
+        int temp = 0, current = 0, next = 1;
+        for (int i = 1; i < n; i++)
+        {
+            temp = next;
+            next = current + next;
+            current = temp;
+        }
+        return next;    
+    }
+}
