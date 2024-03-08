@@ -5,21 +5,25 @@ function lekerdezes() {
     return response.json();
   })
   .then(city => {
-    logolas(city);
+    /*logolas(city);*/
     document.getElementById("selectedcity").style.display = "block"    
     document.getElementById("selectedcity").innerHTML = kiiras(city);
-    console.log(zips.zip)
   })
   .catch(error => {
     alert("Hiba történt.", error)
   });
   
 };
+/*
 function logolas(city) {
   console.log(city.zip)
 };
+*/
 function kiiras(city) {
-      let ki = "";
-      ki += "zip:" + city.zip;
-      return ki;
-    };
+  let ki = "";
+  for (const i of city.zips) {
+    ki += `${i.zip}: ${i.name}<br>`;
+    console.log(ki)
+  }
+  return ki;
+};
