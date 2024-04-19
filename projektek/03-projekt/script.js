@@ -1,7 +1,7 @@
 const url = "https://vvri.pythonanywhere.com/api/courses";
 
-document.getElementById("getAllCourses").addEventListener("click", () => {
-    // Kurzusok lekérdezése és listázása
+document.getElementById("getAllCourses").addEventListener("click", GetMethod());
+function GetMethod() {
     fetch(url)
         .then(response => response.json())
         .then(courses => {
@@ -29,7 +29,7 @@ document.getElementById("getAllCourses").addEventListener("click", () => {
             });
         })
         .catch(error => console.log("Hiba történt: " + error));
-});
+}
 
 function newCourseNameAppear() {
     const newCourseName = document.getElementById('newCourseName');
@@ -43,16 +43,15 @@ function newCourseNameAppear() {
     }
 }
 
-document.getElementById("createCourse").addEventListener("click", () => {
-    const newCourseName = document.getElementById('newCourseName')
-    console.log(newCourseName);
+document.getElementById("createCourse").addEventListener("click", PostMethod());
+function PostMethod() {
+    const newCourseName = document.getElementById('newCourseName');
     if (newCourseName.value !== "") {
-        fetch(url,
-        {
+        fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
-            }, 
+            },
             body: JSON.stringify({
                 "name": newCourseName.value,
             })
@@ -60,9 +59,9 @@ document.getElementById("createCourse").addEventListener("click", () => {
         .then(course => {
             alert(`Kurzus sikeresen létrehozva!`);
             newCourseName.value = "";
+            // After the post request, get the updated courses
+            GetMethod();
         })
-        .catch(error => console.log("Hiba történt: " + error))
-    } else {
-        alert("Nincs megadva kurzus neve vagy leírása!")
+        .catch(error => console.log("Hiba történt: " + error));
     }
-});
+}
