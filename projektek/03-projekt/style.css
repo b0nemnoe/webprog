@@ -1,0 +1,47 @@
+#newCourseName {
+    display: none;
+    position: fixed;
+    bottom: 50px;
+    right: 100px;
+}
+
+#content{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+#newCourse{
+    font-size: 50px;
+    background: none;
+    border-radius: 15px;
+    border: 3px solid hsl(0, 0%, 60%);
+    position: fixed;
+    bottom: 30;
+    right: 30;
+}
+
+#newCourse:hover{
+    background: hsl(0, 0%, 70%);
+    color: hsl(0, 0%, 100%);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.card{
+    border: 1px solid red;
+    width: 300px;
+    height: 150px;
+    
+    
+}
+
+.card-title{
+    border: 1px solid hsla(0, 0%, 34%);
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    width: fit-content;
+}
