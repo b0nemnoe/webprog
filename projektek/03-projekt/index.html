@@ -10,12 +10,29 @@
 
 <body>
     <h1>Kurzusok</h1>
-    <button id="getAllCourses">Összes kurzus</button>
+    
+    <button id="getAllCourses" onclick="GetMethod()"><i class="fa-solid fa-rotate-right"></i></button>
     <button id="newCourse" onclick="newCourseNameAppear()"><i class="fa-solid fa-plus"></i></button>
     <input type="text" placeholder="Kurzus neve" id="newCourseName">
-    <button id="createCourse">létrehozás</button>
+    <button id="createCourse" onclick="PostMethod()">létrehozás</button>
     
-    <div id="content"></div>
+    
+    <div id="content">
+        
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalContent"></p>
+            <input type="text" placeholder="diák neve" id="newStudentName">
+            <button id="newStudentBtn" onclick="StudentsPostMethod(kurzusid/*, diaknev*/)"><i class="fa-solid fa-plus"></i></button>
+            <table id="studentdiv">
+                
+            </table>
+        </div>
+    </div>
+    
     
     <!--
     <navbar>
