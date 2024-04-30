@@ -28,18 +28,6 @@ function GetMethod() {
                 const idnumber = document.createElement("p");
                 idnumber.classList.add("szamozas");
                 idnumber.textContent = course.id;
-/*
-                const studentAddText = document.createElement("input");
-                studentAdd.type = "text";
-                studentAdd.classList.add("studentAdd");
-
-                const studentAddBtn = document.createElement("button");
-                studentAddBtn.classList.add("studentAddBtn");
-                studentAddBtn.textContent = "";
-*/
-
-                /*fa-solid fa-plus*/
-
                 item.appendChild(courseNameElement);
                 item.appendChild(idnumber);
                 // Kurzus részleteinek megjelenítése egy kattintásra
@@ -71,10 +59,7 @@ function newCourseNameAppear() {
         newCourseName.style.display = 'none';
         creatNewCourse.style.display = 'none';
     }
-}
-
-
-
+};
 function PostMethod() {
     const newCourseName = document.getElementById('newCourseName');
     if (newCourseName.value !== "") {
@@ -96,10 +81,8 @@ function PostMethod() {
         })
         .catch(error => console.log("Hiba történt: " + error));
     }
-}
-
+};
 //gethmethod for the students
-
 function GetMethodStudents(courseId) {
     const studentdiv = document.getElementById("studentdiv");
     studentdiv.innerHTML = "";
@@ -114,15 +97,13 @@ function GetMethodStudents(courseId) {
             students = student.students;
             studentdiv.innerHTML = students.map((student) => `<tr><td>${student.name}</td></tr>`).join(``);  
         });
-    };
-
-    
-
-    function StudentsPostMethod(courseId/*, studentName*/) {
+};
+function StudentsPostMethod(courseId/*, studentName*/) {
         let studentName = document.getElementById("newStudentName").value;
         const studentdiv = document.getElementById("studentdiv");
         let studentExists = false;
         students.forEach(student => {
+            
             if (student.name.toLowerCase() === studentName.toLowerCase()) {
                 studentExists = true;
             }
@@ -146,7 +127,7 @@ function GetMethodStudents(courseId) {
         } else {
             alert(`Ez a diák már létezik!!`);
         }
-    }
+};
 
 function handleCardClick(courseId, coursename) {
     GetMethodStudents(courseId) 
@@ -162,12 +143,9 @@ function handleCardClick(courseId, coursename) {
     diaknev = "";
     diaknev = document.getElementById("newStudentName").value;
 }
-
-
-
 // Add a click event listener to the close button
 document.getElementsByClassName("close")[0].onclick = function() {
     document.getElementById("myModal").style.display = "none";
 }
-
+//megjelenjen alapértelmezetten
 GetMethod();
