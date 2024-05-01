@@ -93,11 +93,46 @@ function GetMethodStudents(courseId) {
     }
     fetch(`https://vvri.pythonanywhere.com/api/courses/${courseId}`)
         .then(response => response.json())
-        .then(student => {
-            students = student.students;
-            studentdiv.innerHTML = students.map((student) => `<tr><td>${student.name}</td></tr>`).join(``);  
-        });
+        .then(course => {
+            students = course.students;
+            course.students.forEach(student => {
+                let name = student.name;
+                let id = student.id;
+                let cid = course.id;
+                let studentdiv = document.getElementById("studentdiv");
+
+
+                const row = document.createElement("tr");
+                const td1 = document.createElement("td");
+                td1.textContent = name;
+
+                const td2 = document.createElement("td");
+
+                const btnEdit = document.createElement("button");
+                btnEdit.classList.add("fa-solid", "fa-user-plus");
+                btnEdit.id = "editStudentName";
+                btnEdit.onclick = () => {
+                    EditStudent(id, name, cid);
+                };
+                const td3 = document.createElement("td");
+                const btnDel = document.createElement("button");
+                btnDel.classList.add("fa-regular", "fa-square-minus");
+                btnDel.id = "deleteStudent";
+                btnDel.onclick = () => {
+                    deleteStudent(id, cid);
+                };
+                td2.appendChild(btnEdit);
+                td3.appendChild(btnDel);
+
+                row.appendChild(td1);
+                row.appendChild(td2);
+                row.appendChild(td3);
+
+                studentdiv.appendChild(row);
+                
+            });})
 };
+
 function StudentsPostMethod(courseId/*, studentName*/) {
         let studentName = document.getElementById("newStudentName").value;
         const studentdiv = document.getElementById("studentdiv");
@@ -142,7 +177,41 @@ function handleCardClick(courseId, coursename) {
     const studentAddBtn = document.getElementById("studentAddBtn");
     diaknev = "";
     diaknev = document.getElementById("newStudentName").value;
+};
+
+function EditStudent(studentId, currentName, courseId) {
+    let newname = prompt("Adja meg a diák új nevét:", currentName);
+    if (newname) {
+        fetch(`https://vvri.pythonanywhere.com/api/students/${studentId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "name": newname,
+                "course_id": courseId
+            })
+        })
+        .then(response => response.json())
+        .then(alert(`A diák neve sikeresen módosítva!`))
+        .then(GetMethodStudents(courseId))
+        .catch(error => console.log("Hiba történt: " + error));
+    }
+};
+
+function deleteStudent(studentId, courseId) {
+    if (confirm("Biztosan törölni szeretné ezt a diákot?")) {
+        fetch(`https://vvri.pythonanywhere.com/api/students/${studentId}`, {
+            method: 'DELETE'
+        })
+        .then(alert(`A diák sikeresen törölve!`))
+        .then(GetMethodStudents(courseId))
+        .catch(error => console.log('Hiba történt: ' + error));
+    }
 }
+
+
+
 // Add a click event listener to the close button
 document.getElementsByClassName("close")[0].onclick = function() {
     document.getElementById("myModal").style.display = "none";

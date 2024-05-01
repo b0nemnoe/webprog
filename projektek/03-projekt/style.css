@@ -1,3 +1,29 @@
+
+#editStudentName, #deleteStudent{
+    font-size: 25px;
+    background: none;
+    border: none;
+}
+#newStudentBtn{
+    font-size: 20px;
+    background: none;
+    border: none;
+}
+
+#editStudentName:hover, #deleteStudent:hover, #newStudentBtn:hover{
+    background-color: #888;
+    border: solid 0px #888;
+    border-radius: 5px;
+}
+
+#newStudentName{
+    font-size: 15px;
+    background: none;
+    border: 2px solid #888;
+    border-radius: 6px;
+    padding-left: 5px;
+}
+
 .szamozas{
     color: green;
 }
@@ -21,7 +47,7 @@
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%; /* Adjust the width as needed */
+    width: 15%; /* Adjust the width as needed */
     max-width: 500px; /* Set a maximum width to prevent overflow */
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
