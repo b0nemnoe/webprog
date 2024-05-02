@@ -1,4 +1,6 @@
-
+*{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 #editStudentName, #deleteStudent{
     font-size: 25px;
     background: none;
@@ -19,15 +21,16 @@
 #newStudentName{
     font-size: 15px;
     background: none;
-    border: 2px solid #888;
+    border: 2px solid hsl(41, 100%, 50%);
     border-radius: 6px;
     padding-left: 5px;
 }
 
+
 .szamozas{
-    color:hsl(0, 0%, 60%);
+    color:hsl(41, 100%, 50%);
     font-size: 20px;
-    border: solid 2px hsl(0, 0%, 60%);
+    border: solid 2px hsl(41, 100%, 50%);
     border-radius: 5px;
     height: fit-content;
     width: fit-content;
@@ -52,10 +55,10 @@
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #4E6151;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 2px solid hsl(41, 100%, 50%);
     width: 250px; /* modal ablak szélessége */
     max-width: 500px; /* max-width az overflow miatt */
     border-radius: 15px;
@@ -64,7 +67,7 @@
 }
 
 .close {
-    color: #aaaaaa;
+    color: hsl(41, 100%, 50%);
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -94,17 +97,17 @@
 /*összes kurzus gomb*/
 #getAllCourses{
     font-size: 43px;
-    background: none;
     border-radius: 15px;
-    border: 3px solid hsl(0, 0%, 60%);
+    border: 3px solid hsl(24, 15%, 20%);
+    background: #5E8C61;
     position: fixed;
     bottom: 100;
     right: 30;
 }
 
 #newCourse:hover, #getAllCourses:hover{
-    background: hsl(0, 0%, 70%);
-    color: hsl(0, 0%, 100%);
+    background: hsl(24, 15%, 20%);
+    color: hsl(41, 100%, 50%);
     transition: all 0.5s;
     cursor: pointer;
 }
@@ -112,9 +115,9 @@
 /*új kurzus gomb*/
 #newCourse{
     font-size: 50px;
-    background: none;
+    background: #5E8C61;
     border-radius: 15px;
-    border: 3px solid hsl(0, 0%, 60%);
+    border: 3px solid hsl(24, 15%, 20%);
     position: fixed;
     bottom: 30;
     right: 30;
@@ -124,33 +127,48 @@
 #createCourse{
     border-radius: 15px;
     font-size: 20px;
-    border: 3px solid hsl(0, 0%, 60%);
+    border: 3px solid hsl(24, 15%, 20%);
     position: fixed;
     padding: 10px;
     bottom: 16;
     right: 110;
     display: none;
+    background-color: hsl(41, 100%, 50%);
 }
 
 #newCourseName {
     border-radius: 10px;
-    border: 1px solid hsl(0, 0%, 60%);
+    border: 3px solid hsl(24, 15%, 20%);
+    background-color: hsl(41, 100%, 50%);
     display: none;
     position: fixed;
     bottom: 80px;
     right: 120px;
-    width: 10%;
+    width: 110px;
     height: 5%;
 }
 
+#createCourse:hover{
+    background-color: hsl(24, 15%, 20%);
+    color: hsl(41, 100%, 50%);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
 .card{
-    border: 1px solid hsl(0, 0%, 60%);
+    border: 2px solid hsl(24, 15%, 20%);
     width: 250px; /* Adjust the width as needed */
     height: 150px;
     margin: 5px;
     display: flex;
     border-radius: 10px;
+    text-align: center;
     
+}
+.card:hover{
+    cursor: pointer;
+    scale: 1.1;
+    transition: all 0.5s ease;
 }
 
 .card-title{
@@ -166,18 +184,39 @@
 }
 
 .card:nth-child(3n){
-    background-color: #074173;
+    background-color: #94E8B4;
 }
 .card:nth-child(3n-1){
-    background-color: #5DEBD7;
+    background-color: #72BDA3;
 }
 .card:nth-child(3n-2){
-    background-color: #1679AB;
+    background-color: #5E8C61;
 }
 
 body{
     overflow-x: hidden;
-    background-color: #C5FF95;
+    background-color: #4E6151;
+}
+
+#search-container{
+    position: absolute;
+    top: 100;
+    right: 150;
+    
+}
+#search-input{
+    background-color: hsl(41, 100%, 50%);
+    border: 2px solid hsl(24, 15%, 20%);
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+#search-button{
+    font-size: 25px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 3px solid hsl(24, 15%, 20%);
+    background-color: hsl(41, 100%, 50%);
 }
 
 h1
@@ -185,10 +224,12 @@ h1
     text-transform: uppercase;
     background-image: linear-gradient(
     -225deg,
-    #074173 0%,
-    #5DEBD7 29%,
-    #1679AB 67%,
-    #C5FF95 100%
+    #4E6151 0%,
+    #5E8C61 25%,
+    #72BDA3 50%,
+    #94E8B4 75%,
+    #4E6151 100%
+
   );
   background-size: auto auto;
   background-clip: border-box;

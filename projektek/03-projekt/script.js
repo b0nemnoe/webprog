@@ -223,5 +223,24 @@ function deleteStudent(studentId, courseId) {
 document.getElementsByClassName("close")[0].onclick = function() {
     document.getElementById("myModal").style.display = "none";
 }
+
+const searchInput = document.getElementById('search-input');
+const searchButton = document.getElementById('search-button');
+
+searchButton.addEventListener('click', () => {
+  const inputValue = searchInput.value.toLowerCase();
+  const courses = document.querySelectorAll('.card');
+
+  courses.forEach(course => {
+    const courseTitle = course.querySelector('.card-title').textContent.toLowerCase();
+
+    if (courseTitle.includes(inputValue)) {
+      course.style.display = 'block';
+    } else {
+      course.style.display = 'none';
+    }
+  });
+});
+
 //megjelenjen alapértelmezetten
 GetMethod();
