@@ -8,47 +8,57 @@ let kurzusnev = 0;
 let students = [];
 let allstudents = [];
 
-function GetMethod() {
+async function GetMethod() {
     const contentdiv = document.getElementById("content");
-    // Clear existing cards
+
+    // torli a megjelent adatokat, hogy ne jelenjenek meg tobbszor
     while (contentdiv.firstChild) {
         contentdiv.removeChild(contentdiv.firstChild);
     }
-    fetch(url)
-        .then(response => response.json())
-        .then(courses => {
-            courses.forEach(course => {
-                const item = document.createElement("div")
-                item.dataset.id = course.id;
-                item.classList.add("card");
 
-                const courseNameElement = document.createElement("p")
-                courseNameElement.classList.add("card-title");
-                courseNameElement.textContent = course.name;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const courses = await response.json();
+        courses.forEach(course => createCourseCard(course, contentdiv));
+    } catch (error) {
+        console.error("Hiba történt: ", error);
+    }
+}
 
-                const idnumber = document.createElement("p");
-                idnumber.classList.add("szamozas");
-                idnumber.textContent = course.id;
-                item.appendChild(courseNameElement);
-                item.appendChild(idnumber);
-                // Kurzus részleteinek megjelenítése egy kattintásra
-                item.addEventListener("click", () => {
-                    fetch(`https://vvri.pythonanywhere.com/api/courses/${course.id}`)
-                        .then(response => response.json())
-                        .then(course => {
-                            kurzusid = course.id;
-                            kurzusnev = course.name;
-                            handleCardClick(course.id, course.name);
-                        })
-                        .catch(error => console.log("Hiba történt: " + error));
-                });
-                
+function createCourseCard(course, container) {
+    const item = document.createElement("div");
+    item.dataset.id = course.id;
+    item.classList.add("card");
 
-                contentdiv.appendChild(item);
-            });
-        })
-        .catch(error => console.log("Hiba történt: " + error));
+    const courseNameElement = document.createElement("p");
+    courseNameElement.classList.add("card-title");
+    courseNameElement.textContent = course.name;
 
+    item.appendChild(courseNameElement);
+
+    // kurzus adatok click
+    item.addEventListener("click", () => fetchCourseDetails(course.id));
+
+    container.appendChild(item);
+}
+
+//kurzusadatok fetchelese
+async function fetchCourseDetails(courseId) {
+    try {
+        const response = await fetch(`https://vvri.pythonanywhere.com/api/courses/${courseId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const course = await response.json();
+        kurzusid = course.id;
+        kurzusnev = course.name;
+        handleCardClick(course.id, course.name);
+    } catch (error) {
+        console.error("Hiba történt: ", error);
+    }
 }
 
 function newCourseNameAppear() {
@@ -62,93 +72,119 @@ function newCourseNameAppear() {
         creatNewCourse.style.display = 'none';
     }
 };
-function PostMethod() {
+//postmethod a kurzusok lekerese
+async function PostMethod() {
     const newCourseName = document.getElementById('newCourseName');
-    if (newCourseName.value !== "") {
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "name": newCourseName.value,
-            })
-        }).then(response => response.json())
-        .then(course => {
-            GetMethod();
+    const courseNameValue = newCourseName.value.trim();
+    
+    if (courseNameValue !== "") {
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "name": courseNameValue,
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const course = await response.json();
             alert(`Kurzus sikeresen létrehozva!`);
             newCourseName.value = "";
-            // After the post request, get the updated courses
-            
-        })
-        .catch(error => console.log("Hiba történt: " + error));
-    }
-};
-//gethmethod for the students
-function GetMethodStudents(courseId) {
-    const studentdiv = document.getElementById("studentdiv");
-    studentdiv.innerHTML = "";
-    students = [];
-    // Clear existing cards
-    while (studentdiv.firstChild) {
-        studentdiv.removeChild(studentdiv.firstChild);
-    }
-    fetch(`https://vvri.pythonanywhere.com/api/courses/${courseId}`)
-        .then(response => response.json())
-        .then(course => {
-            students = course.students;
-            course.students.forEach(student => {
-                let name = student.name;
-                let id = student.id;
-                let cid = course.id;
-                let studentdiv = document.getElementById("studentdiv");
-
-
-                const row = document.createElement("tr");
-                const td1 = document.createElement("td");
-                td1.textContent = name;
-
-                const td2 = document.createElement("td");
-
-                const btnEdit = document.createElement("button");
-                btnEdit.classList.add("fa-solid", "fa-user-plus");
-                btnEdit.id = "editStudentName";
-                btnEdit.onclick = () => {
-                    EditStudent(id, name, cid);
-                };
-                const td3 = document.createElement("td");
-                const btnDel = document.createElement("button");
-                btnDel.classList.add("fa-regular", "fa-square-minus");
-                btnDel.id = "deleteStudent";
-                btnDel.onclick = () => {
-                    deleteStudent(id, cid);
-                };
-                td2.appendChild(btnEdit);
-                td3.appendChild(btnDel);
-
-                row.appendChild(td1);
-                row.appendChild(td2);
-                row.appendChild(td3);
-
-                studentdiv.appendChild(row);
-                
-            });})
-};
-
-function StudentsPostMethod(courseId) {
-    let studentName = document.getElementById("newStudentName").value;
-    const studentdiv = document.getElementById("studentdiv");
-    let studentExists = false;
-    
-    // Ellenőrizze, hogy a diák már létezik-e a kurzusban
-    students.forEach(student => {
-        if (student.name.toLowerCase() === studentName.toLowerCase()) {
-            studentExists = true;
+            GetMethod();  // Refresh the list of courses
+        } catch (error) {
+            console.error("Hiba történt: ", error);
+            alert("Hiba történt a kurzus létrehozása során.");
         }
-    });
+    } else {
+        alert("Kérjük, adjon meg egy kurzusnevet.");
+    }
+}
+//gethmethod a diakok lekerese
+async function GetMethodStudents(courseId) {
+    const studentDiv = document.getElementById("studentdiv");
+    studentDiv.innerHTML = ""; // Clear existing content
 
-    if (!studentExists) {
-        fetch(`https://vvri.pythonanywhere.com/api/students`, {
+    try {
+        const response = await fetch(`https://vvri.pythonanywhere.com/api/courses/${courseId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const course = await response.json();
+        const students = course.students;
+
+        students.forEach(student => {
+            const { id, name } = student;
+            const courseId = course.id;
+
+            const row = document.createElement("tr");
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = name;
+            row.appendChild(nameCell);
+
+            const editCell = document.createElement("td");
+            const editButton = document.createElement("button");
+            editButton.classList.add("fa-solid", "fa-user-plus");
+            editButton.id = "editStudentName";
+            editButton.onclick = () => {
+                EditStudent(id, name, courseId);
+            };
+            editCell.appendChild(editButton);
+            row.appendChild(editCell);
+
+            const deleteCell = document.createElement("td");
+            const deleteButton = document.createElement("button");
+            deleteButton.classList.add("fa-regular", "fa-square-minus");
+            deleteButton.id = "deleteStudent";
+            deleteButton.onclick = () => {
+                deleteStudent(id, courseId);
+            };
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
+
+            studentDiv.appendChild(row);
+        });
+    } catch (error) {
+        console.error("Hiba történt: ", error);
+    }
+}
+
+
+async function StudentsPostMethod(courseId) {
+    const studentNameInput = document.getElementById("newStudentName");
+    const studentName = studentNameInput.value.trim();
+    const studentDiv = document.getElementById("studentdiv");
+
+    if (studentName === "") {
+        alert("Kérjük, adjon meg egy diáknevet.");
+        return;
+    }
+
+    try {
+        // diakok fetchelese
+        const response = await fetch('https://vvri.pythonanywhere.com/api/students');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const allStudents = await response.json();
+
+        // ellenorzi hogy letezik e
+        let studentExists = allStudents.some(student => student.name.toLowerCase() === studentName.toLowerCase());
+
+        if (studentExists) {
+            alert("Ez a diák már létezik egy kurzusban!");
+            return;
+        }
+
+        // ha nem letezik adja hozza
+        const postResponse = await fetch('https://vvri.pythonanywhere.com/api/students', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -157,19 +193,55 @@ function StudentsPostMethod(courseId) {
                 "name": studentName,
                 "course_id": courseId
             })
-        }).then(response => response.json())
-        .then(student => {
-                const newstudent = `<tr><td>${studentName}</td></tr>`;
-                studentdiv.innerHTML += newstudent;
-                students.push({ name: studentName.toLowerCase() }); // Frissítsük a students tömböt
-                alert(`A diák sikeresen hozzáadva!`);
-                GetMethodStudents(courseId);
-        })
-        .catch(error => console.log("Hiba történt: " + error));
-    } else {
-        alert(`Ez a diák már létezik a kurzusban!`);
+        });
+
+        if (!postResponse.ok) {
+            throw new Error(`HTTP error! status: ${postResponse.status}`);
+        }
+
+        const newStudent = await postResponse.json();
+
+        // frissiti a table-t
+        const row = document.createElement("tr");
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = studentName;
+        row.appendChild(nameCell);
+
+        const editCell = document.createElement("td");
+        const editButton = document.createElement("button");
+        editButton.classList.add("fa-solid", "fa-user-plus");
+        editButton.id = "editStudentName";
+        editButton.onclick = () => {
+            EditStudent(newStudent.id, studentName, courseId);
+        };
+        editCell.appendChild(editButton);
+        row.appendChild(editCell);
+
+        const deleteCell = document.createElement("td");
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("fa-regular", "fa-square-minus");
+        deleteButton.id = "deleteStudent";
+        deleteButton.onclick = () => {
+            deleteStudent(newStudent.id, courseId);
+        };
+        deleteCell.appendChild(deleteButton);
+        row.appendChild(deleteCell);
+
+        studentDiv.appendChild(row);
+
+        // diaktomb frissitese
+        students.push({ id: newStudent.id, name: studentName.toLowerCase() });
+
+        alert("A diák sikeresen hozzáadva!");
+        studentNameInput.value = ""; // torli az input mezot
+
+    } catch (error) {
+        console.error("Hiba történt: ", error);
+        alert("Hiba történt a diák hozzáadása során.");
     }
 }
+
 
 function handleCardClick(courseId, coursename) {
     GetMethodStudents(courseId) 
@@ -186,10 +258,21 @@ function handleCardClick(courseId, coursename) {
     diaknev = document.getElementById("newStudentName").value;
 };
 
-function EditStudent(studentId, currentName, courseId) {
-    let newname = prompt("Adja meg a diák új nevét:", currentName);
-    if (newname) {
-        fetch(`https://vvri.pythonanywhere.com/api/students/${studentId}`, {
+async function EditStudent(studentId, currentName, courseId) {
+    const newname = prompt("Adja meg a diák új nevét:", currentName).trim();
+
+    if (!newname) {
+        alert("A név nem lehet üres!");
+        return;
+    }
+
+    if (newname === currentName) {
+        alert("Az új név megegyezik a jelenlegi névvel.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://vvri.pythonanywhere.com/api/students/${studentId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -198,13 +281,21 @@ function EditStudent(studentId, currentName, courseId) {
                 "name": newname,
                 "course_id": courseId
             })
-        })
-        .then(response => response.json())
-        .then(alert(`A diák neve sikeresen módosítva!`))
-        .then(() => GetMethodStudents(courseId))
-        .catch(error => console.log("Hiba történt: " + error));
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const updatedStudent = await response.json();
+        alert("A diák neve sikeresen módosítva!");
+        GetMethodStudents(courseId);
+    } catch (error) {
+        console.error("Hiba történt: ", error);
+        alert("Hiba történt a diák módosítása során.");
     }
-};
+}
+
 
 function deleteStudent(studentId, courseId) {
     if (confirm("Biztosan törölni szeretné ezt a diákot?")) {
@@ -219,7 +310,7 @@ function deleteStudent(studentId, courseId) {
 
 
 
-// Add a click event listener to the close button
+//modal bezarasgomb
 document.getElementsByClassName("close")[0].onclick = function() {
     document.getElementById("myModal").style.display = "none";
 }

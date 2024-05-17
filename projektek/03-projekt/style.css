@@ -31,21 +31,6 @@ button:hover{
     padding-left: 5px;
 }
 
-
-.szamozas{
-    color:hsl(41, 100%, 50%);
-    font-size: 20px;
-    border: solid 2px hsl(41, 100%, 50%);
-    border-radius: 5px;
-    height: fit-content;
-    width: fit-content;
-    margin-left: 2px;
-    margin-top: 2px;
-    padding: 3px;
-}
-
-
-
 .modal {
     display: none;
     position: fixed;
@@ -171,6 +156,7 @@ button:hover{
     display: flex;
     border-radius: 10px;
     text-align: center;
+    transition: opacity 0.6s ease;
 
 }
 .card:hover{
@@ -179,9 +165,13 @@ button:hover{
     transition: all 0.5s ease;
 }
 
+#content:hover > :not(:hover){
+    opacity: 0.4;
+}
+
 .card-title{
     font-size: 23px;
-    
+    align-content: center;
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
@@ -234,7 +224,7 @@ body{
     transition: all 0.5s;
     cursor: pointer;
 }
-
+/*
 h1
 {
     text-transform: uppercase;
@@ -263,5 +253,63 @@ h1
 @keyframes textclip {
   to {
     background-position: 200% center;
+  }
+}*/
+
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+
+
+#title {
+  position: relative;
+  width: 83%;
+  height: 175px;
+  margin: 7% auto;
+}
+
+h1 {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  font-size: 45px;
+  font-family: 'Raleway', sans-serif;
+}
+
+h1:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  line-height: 48px;
+  left: 30%;
+  top: 50%;
+  animation: abomination1 7.5s linear 1;
+  animation-fill-mode: forwards;
+}
+
+
+  @keyframes abomination1 {
+  0% {
+    content: "K";
+  }
+  12.5% {
+    content: "U";
+  }
+  25% {
+    content: "R";
+  }
+  37.5% {
+    content: "Z";
+  }
+  50% {
+    content: "U";
+  }
+  62.5% {
+    content: "S";
+  }
+  75% {
+    content: "O";
+  }
+  87.5% {
+    content: "K";
   }
 }
