@@ -1,3 +1,3 @@
 function check(a,x){
-    return a.includes(x) ? true : false;
+    return a.includes(x);
 };
