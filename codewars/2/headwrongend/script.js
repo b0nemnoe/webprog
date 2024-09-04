@@ -1,4 +1,4 @@
-function fixTheMeerkat(arr) 
+function fixTheMeerkat(array) 
 {  
-    return arr.reverse();
+    return array.reverse();
 }
