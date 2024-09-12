@@ -1,11 +1,10 @@
-<!-- #region https://www.codewars.com/api/v1/users/{user}
--->
 <!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codewars stats</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <div id="container">
@@ -15,10 +14,19 @@
             <br>
             <button onclick="lekerdezes()">Lekérdezés</button>
         </div>
-        <div id="selectedUser"></div>
 
+        <!-- Menü -->
+        <div id="menu">
+            <button onclick="megmutat('overall')">Összesített adatok</button>
+            <button onclick="megmutat('languages')">Pontok nyelvek szerint</button>
+        </div>
+
+        <!-- Eredmények -->
+        <div id="selectedUser">
+            <h2>Felhasználó adatai</h2>
+            <p id="user-data">Adatok betöltése...</p>
+        </div>
     </div>
     <script src="./js/script.js"></script>
-    
 </body>
 </html>
