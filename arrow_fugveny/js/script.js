@@ -1,2 +1,0 @@
-const Megforditas = (input) => input.split("").reverse().join("");
-addEventListener("click", function(){document.getElementById("megforditott").value = Megforditas(document.getElementById("eredeti").value);} );

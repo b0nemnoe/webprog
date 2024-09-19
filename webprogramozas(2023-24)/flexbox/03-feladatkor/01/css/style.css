@@ -1,0 +1,39 @@
+
+#container{
+    display: flex;
+    height: 100%;
+    margin: 30px;
+    flex-direction: column;
+}
+#fo{
+    display: flex;
+    height: 600px;
+    width: 100%;
+}
+
+#lila{
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 25px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: purple;
+}
+
+.sarga{
+    flex: 2;
+    background-color: yellow;
+}
+.zold{
+    flex: 1;
+    background-color: green;
+}
+
+.cian{
+    background-color: cyan;
+    height: 30px;
+    width: 100px;
+    margin-left: 15px;
+}
