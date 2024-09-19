@@ -19,7 +19,7 @@ function lekerdezes() {
     });
 }
 
-function megmutat(option) {
+function show(option) {
   const user = window.userData; // Elérjük a korábban letöltött adatokat
   if (!user) {
     alert("Először kérdezz le egy felhasználót!");
