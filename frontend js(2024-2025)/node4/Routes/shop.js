@@ -1,9 +1,15 @@
 import express from 'express'
+import path from 'path'
+import __dirname from '../util/rootpath.js'
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.send('Root Page')
+    res.render('shop.ejs', {
+        pageTitle : 'Shop'
+    })
+
 })  
+
 
 export default router
