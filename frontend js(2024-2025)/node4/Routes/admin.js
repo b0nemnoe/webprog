@@ -8,7 +8,8 @@ const products = []
 
 router.get('/add-product', (req, res) => {
     res.render('add-product', {
-        pageTitle : 'Add product'
+        pageTitle : 'Add product',
+        path: '/admin/add-product'
     })
 })
 

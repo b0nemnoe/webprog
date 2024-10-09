@@ -21,7 +21,8 @@ app.use('/', shopRoutes)
 
 app.use((req, res) => {
     res.status(404).render('404.ejs', {
-        pageTitle: "Page Not Found"
+        pageTitle: "Page Not Found",
+        path: ''
     })
 })
 
